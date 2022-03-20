@@ -5,10 +5,22 @@ class Game {
 
         game.ID = env.newID()
 
-        game.width = 600
-        game.height = 600
-
         game.running = true
-        game.winner
     }
+}
+
+Game.prototype.init = function() {
+
+    const game = this
+
+    // Create players
+
+    new Player('person')
+}
+
+Game.prototype.visualize = function() {
+
+    const game = this
+
+
 }

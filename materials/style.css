@@ -1,6 +1,6 @@
 /*IMPORTANT*/
 
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
@@ -13,7 +13,7 @@ body {
     margin: 0;
     scroll-behavior: smooth;
     overflow-x: hidden;
-    font-family: "comfortaa";
+    font-family: "Raleway";
     background: var(--secondaryShade);
     color: white;
     --primary: rgb(211, 13, 13);
@@ -49,31 +49,57 @@ style {
 }
 
 
-/*CONTENT*/
+/* Content */
 
-.env {
+.envParent {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--tertiaryShade);
-    gap: 30px;
+    gap: 20px;
 }
 
-.game {
+.env {
     box-shadow: rgba(0, 0, 0, 0.3) 0 0 80px 0;
     background: var(--secondaryShade);
+    z-index: 1;
+    height: fit-content;
 }
 
 .displayParent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.displayChild {
     padding: 20px;
-    gap: 10px;
+    gap: 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.3) 0 0 80px 0;
     background: var(--secondaryShade);
+}
+
+.envIcon {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 20px 0;
+}
+
+.envTitle {
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 1px;
+    user-select: none;
 }
 
 .statsParent {
@@ -87,40 +113,46 @@ style {
     gap: 10px;
 }
 
-.statsTitle {
-    font-size: 30px;
-    font-weight: 600;
-    padding: 20px 0;
-    text-align: center;
-}
-
 .statsHeader {
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .statsAmount {
     font-weight: 200;
 }
 
-.statsInput {
-    padding: 4px;
+.changeParent {
+    display: flex;
+    justify-content: center;
+    border-radius: 30px;
+}
+
+.changeInput {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding: 6px;
+    padding-left: 15px;
+    font-size: 16px;
+    width: 130px;
     border: var(--tertiaryShade) 2px solid;
     transition: all 0.3s;
 }
 
-.statsInput::placeholder {
+.changeInput::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.statsInput:hover {
+.changeInput:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 20px 0;
 }
 
-.statsInput:focus {
+.changeInput:focus {
     box-shadow: rgba(0, 0, 0, 0.3) 0 12px 20px 0;
 }
 
-.statsButton {
+.changeButton {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
     background-color: var(--tertiaryShade);
     padding: 8px 20px;
     cursor: pointer;
@@ -128,10 +160,83 @@ style {
     transition: all 0.3s;
 }
 
-.statsButton:hover {
+.changeButton:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 20px 0;
 }
 
-.statsButton:focus {
+.changeButton:focus {
     box-shadow: rgba(0, 0, 0, 0.3) 0 12px 20px 0;
+}
+
+
+/* Neural Network */
+
+.networkVisualsParent {
+    padding: 0 80px;
+    gap: 160px;
+    display: flex;
+}
+
+.visualsParent {
+    position: relative;
+    width: fit-content;
+    display: flex;
+    pointer-events: none;
+}
+
+.visualsParentHide {
+    display: none;
+}
+
+.layerVisual {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.perceptronVisual {
+    background: rgb(28, 238, 0);
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 20px 0;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: black;
+    position: relative;
+    outline: 1.9px solid rgb(255, 255, 255);
+}
+
+.inputPerceptron {
+    background: rgb(255, 187, 0);
+}
+
+.outputPerceptron {
+    background: rgb(250, 15, 15);
+}
+
+.textVisual {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    width: fit-content;
+}
+
+.lineParent {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.line {
+    stroke-width: 1.5px;
+}
+
+.lineDisconnected {
+    opacity: 0;
 }

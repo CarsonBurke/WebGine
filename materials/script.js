@@ -1,3 +1,5 @@
+env.init()
+
 function wait(miliseconds) {
 
     return new Promise(resolve => setTimeout(resolve, miliseconds))
@@ -10,11 +12,11 @@ document.addEventListener('change', changeSpeed)
 
 function changeSpeed() {
 
-    speedMultiplier = document.getElementById('newSpeed').value || speedMultiplier
+    env.speed = document.getElementById('newSpeed').value || env.speed
 
     let i = 0
 
-    while (i < speedMultiplier) {
+    while (i < env.speed) {
 
         if (restart) {
 
@@ -28,9 +30,9 @@ function changeSpeed() {
 
             while (1 == 1) {
 
-                await wait(speedMultiplier - 1000)
+                await wait(env.speed - 1000)
 
-                runEnv()
+                env.run()
             }
         }
 
