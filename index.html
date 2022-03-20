@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="materials/images/carsonIcon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="materials/style.css" rel="stylesheet" type="text/css" />
+    <title>WebGine</title>
+</head>
+
+<body>
+
+    <div class="env">
+        <canvas class="game">
+
+        </canvas>
+        <div class="displayParent">
+            <div class="displayChild">
+                <div class="statsParent">
+
+                    <h1 class="statsTitle">WebGine</h1>
+
+                    <div class="statsChild">
+
+                        <h3 class="statsHeader">Tick: </h3>
+                        <h3 class="statsAmount" id="tick">0</h3>
+
+                    </div>
+                    <div class="statsChild">
+
+                        <h3 class="statsHeader">Games: </h3>
+                        <h3 class="statsAmount" id="games">0</h3>
+
+                    </div>
+                    <div class="statsChild">
+
+                        <h3 class="statsHeader">Top Score: </h3>
+                        <h3 class="statsAmount" id="topScore">0</h3>
+
+                    </div>
+                    <div class="statsChild">
+
+                        <input class="statsInput" type="number" placeholder="Games amount" id="newSpeed">
+                        <button class="statsButton waveButton" id="changeGames">Change</button>
+
+                    </div>
+                    <div class="statsChild">
+
+                        <input class="statsInput" type="number" placeholder="Speed" id="newSpeed">
+                        <button class="statsButton waveButton" id="changeSpeed">Change</button>
+
+                    </div>
+                </div>
+                <div class="visualsParentParent">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- JS Imports -->
+
+        <script src="materials/script.js"></script>
+        <script src="materials/wave.js"></script>
+</body>
+
+</html>

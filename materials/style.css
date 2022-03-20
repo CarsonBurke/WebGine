@@ -1,0 +1,137 @@
+/*IMPORTANT*/
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'), url(https://example.com/MaterialIcons-Regular.woff) format('woff'), url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    font-family: "comfortaa";
+    background: var(--secondaryShade);
+    color: white;
+    --primary: rgb(211, 13, 13);
+    --primaryShade: white;
+    --secondaryShade: rgb(51, 48, 54);
+    --tertiaryShade: rgb(32, 32, 39);
+}
+
+body::-webkit-scrollbar {
+    width: 14px;
+    background: #e3e9f0;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #36394550;
+    width: 100%;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #36394580;
+}
+
+* {
+    all: unset;
+}
+
+title {
+    display: none;
+}
+
+style {
+    display: none;
+}
+
+
+/*CONTENT*/
+
+.env {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--tertiaryShade);
+    gap: 30px;
+}
+
+.game {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 80px 0;
+    background: var(--secondaryShade);
+}
+
+.displayParent {
+    padding: 20px;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 80px 0;
+    background: var(--secondaryShade);
+}
+
+.statsParent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.statsChild {
+    display: flex;
+    gap: 10px;
+}
+
+.statsTitle {
+    font-size: 30px;
+    font-weight: 600;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.statsHeader {
+    font-weight: 400;
+}
+
+.statsAmount {
+    font-weight: 200;
+}
+
+.statsInput {
+    padding: 4px;
+    border: var(--tertiaryShade) 2px solid;
+    transition: all 0.3s;
+}
+
+.statsInput::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.statsInput:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 4px 20px 0;
+}
+
+.statsInput:focus {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 12px 20px 0;
+}
+
+.statsButton {
+    background-color: var(--tertiaryShade);
+    padding: 8px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s;
+}
+
+.statsButton:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 4px 20px 0;
+}
+
+.statsButton:focus {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 12px 20px 0;
+}
