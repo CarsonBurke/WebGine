@@ -46,3 +46,10 @@ function changeSpeed() {
     const runner = new Runner()
     runner.run()
 }
+
+document.getElementById('speedForm').addEventListener('submit', stopRefresh)
+
+function stopRefresh(event) {
+
+    event.preventDefault()
+}
