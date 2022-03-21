@@ -28,23 +28,23 @@ Runner.prototype.runTick = async function() {
 
         if (!runners.includes(runner.ID)) return
 
-        await runner.wait(env.speed - 1000)
+        await runner.wait(1000 - env.speed)
 
         env.run()
     }
 }
 
-Runner.prototype.run = async function() {
+Runner.prototype.run = function() {
 
     const runner = this
 
-    let i = 0
+    let i = env.speed
 
-    while (i < env.speed) {
+    while (i > 0) {
 
         runner.runTick()
 
-        i++
+        i--
     }
 }
 
