@@ -42,14 +42,14 @@ class NeuralNetwork {
 
         // Assign default values
 
-        for (let valueName in defaults) {
+        for (const valueName in defaults) {
 
             network[valueName] = defaults[valueName]
         }
 
         // Assign opts
 
-        for (let valueName in opts) {
+        for (const valueName in opts) {
 
             network[valueName] = opts[valueName]
         }

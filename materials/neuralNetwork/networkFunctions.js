@@ -15,7 +15,6 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
     const network = this
 
-
     function findInputs(layerName, perceptronName) {
 
         const newInputs = [network.bias]
@@ -337,22 +336,19 @@ NeuralNetwork.prototype.init = function(inputs, outputs) {
 
             if (layerName == 0) {
 
-                perceptron.createWeights(inputs)
+                perceptron.createWeights(2)
                 continue
             }
 
-            const preceedingLayer = network.layers[parseInt(layerName) - 1]
+            const preceedingLayer = network.layers[parseInt(layerName) - 1],
 
-            const inputCount = Object.keys(preceedingLayer.perceptrons).length
+                inputCount = Object.keys(preceedingLayer.perceptrons).length
 
-            let fakeInputs = []
-
-            for (let i = 0; i < inputCount; i++) fakeInputs.push(0)
-
-            perceptron.createWeights(fakeInputs)
+            perceptron.createWeights(inputCount + 1)
         }
     }
 }
+
 NeuralNetwork.prototype.clone = function(inputs, outputs) {
 
     const network = this

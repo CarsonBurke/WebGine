@@ -43,43 +43,7 @@ Perceptron.prototype.updateVisual = function() {
     return
 }
 
-Perceptron.prototype.findWeightCount = function(inputs) {
-
-    const perceptron = this
-    const network = networks[perceptron.networkID]
-
-    // Config weightCount with an account for the bias
-
-    let weightCount = 1
-
-    // If perceptron's layerName is 0
-
-    if (perceptron.layerName == 0) {
-
-        weightCount += inputs.length
-        return weightCount
-    }
-
-    // If perceptron's layerName is more than 0
-
-    if (perceptron.layerName > 0) {
-
-        // Find previous layer
-
-        const previousLayer = network.layers[perceptron.layerName - 1]
-
-        // Find number of perceptrons in previous layer
-
-        let previousLayerPerceptronCount = Object.keys(previousLayer.perceptrons).length
-
-        // Change iterations to number of perceptrons in previous layer
-
-        weightCount += previousLayerPerceptronCount
-        return weightCount
-    }
-}
-
-Perceptron.prototype.createWeights = function(inputs) {
+Perceptron.prototype.createWeights = function(inputCount) {
 
     const perceptron = this
 
@@ -87,11 +51,9 @@ Perceptron.prototype.createWeights = function(inputs) {
 
     perceptron.weights = []
 
-    const weightCount = perceptron.findWeightCount(inputs)
-
     // Iterate for number of perceptrons in previous layer
 
-    for (let i = 0; i < weightCount; i++) {
+    for (let i = 0; i < inputCount; i++) {
 
         perceptron.weights.push(1)
     }

@@ -3,7 +3,7 @@ const networks = {}
 // Define default values for networks
 
 const defaults = {
-    learningRate: 0.2,
+    learningRate: 1,
     bias: 0,
     layerVisualWidth: 70,
 
