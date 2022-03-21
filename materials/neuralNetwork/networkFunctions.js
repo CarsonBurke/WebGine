@@ -15,9 +15,10 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
     const network = this
 
+
     function findInputs(layerName, perceptron, perceptronName) {
 
-        let newInputs = [network.bias]
+        const newInputs = [network.bias]
 
         // If in first layer
 
@@ -124,7 +125,7 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
     visualsParent.style.width = Object.keys(network.layers).length * network.layerVisualWidth + "px"
 
-    document.getElementsByClassName('visualsParentParent')[0].appendChild(visualsParent)
+    document.getElementsByClassName('networkVisualsParent')[0].appendChild(visualsParent)
     network.visualsParent = visualsParent
 
     // Create svg

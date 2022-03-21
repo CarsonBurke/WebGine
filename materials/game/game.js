@@ -9,12 +9,10 @@ class Game {
         game.running = true
 
         env.games[game.ID] = game
-
-        game.init()
     }
 }
 
-Game.prototype.init = function() {
+Game.prototype.init = function(inputs, outputs, network) {
 
     const game = this
 
@@ -22,9 +20,31 @@ Game.prototype.init = function() {
 
     new Player('person', game.ID)
 
-    // Create units
+    // Create x number of units
 
-    new GameObject('default', game.ID, Object.keys(game.players)[0], 50, 50, 100, 100, 'defaultSprite')
+    for (let i = 0; i < 10; i++) {
+
+        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 100, 100, inputs, outputs, network)
+    }
+}
+
+Game.prototype.reset = function() {
+
+    const game = this
+
+    game.players = {}
+
+    for (const type in game.objects) {
+
+        for (const ID in game.objects[type]) {
+
+            const gameObj = game.objects[type][ID]
+
+            gameObj.delete()
+        }
+    }
+
+    game.running = true
 }
 
 Game.prototype.visualize = function() {
@@ -35,9 +55,9 @@ Game.prototype.visualize = function() {
 
         for (const ID in game.objects[type]) {
 
-            const object = game.objects[type][ID]
+            const gameObj = game.objects[type][ID]
 
-            object.draw()
+            gameObj.draw()
         }
     }
 }

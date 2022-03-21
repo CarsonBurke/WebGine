@@ -1,28 +1,3 @@
-Perceptron.prototype.mutateWeight = function(weight, amount) {
-
-    const perceptron = this
-
-    // Decide if to subract or add
-
-    let boolean = Math.floor(Math.random() * 2)
-
-    // Random amount to mutate
-
-    let mutation = Math.random() * amount
-
-    // Apply mutation
-
-    if (boolean == 0) {
-
-        weight += Math.random() * mutation
-        return weight
-    }
-    if (boolean == 1) {
-
-        weight -= Math.random() * mutation
-        return weight
-    }
-}
 Perceptron.prototype.mutateWeights = function() {
 
     const perceptron = this
@@ -30,11 +5,10 @@ Perceptron.prototype.mutateWeights = function() {
 
     // Mutate weights
 
-    let newWeights = []
+    for (let i = 0; i < perceptron.weights.length; i++) {
 
-    for (let weight of perceptron.weights) newWeights.push(perceptron.mutateWeight(weight, network.learningRate))
-
-    perceptron.weights = newWeights
+        perceptron.weights[i] += (Math.random() * network.learningRate - Math.random() * network.learningRate)
+    }
 }
 
 Perceptron.prototype.updateVisual = function() {
@@ -44,7 +18,7 @@ Perceptron.prototype.updateVisual = function() {
 
     // If perceptron's activateValue is 0
 
-    if (perceptron.activateValue == 0) {
+    if (Math.floor(perceptron.activateValue * 100) / 100 == 0) {
 
         // Display 0
 
@@ -54,7 +28,7 @@ Perceptron.prototype.updateVisual = function() {
 
         perceptron.visual.style.outlineColor = network.inactiveColor
 
-        // Iterate
+        // And stop
 
         return
     }
@@ -99,7 +73,7 @@ Perceptron.prototype.findWeightCount = function(inputs) {
         let previousLayerPerceptronCount = Object.keys(previousLayer.perceptrons).length
 
         // Change iterations to number of perceptrons in previous layer
-        
+
         weightCount += previousLayerPerceptronCount
         return weightCount
     }
@@ -108,7 +82,6 @@ Perceptron.prototype.findWeightCount = function(inputs) {
 Perceptron.prototype.createWeights = function(inputs) {
 
     const perceptron = this
-    const network = networks[perceptron.networkID]
 
     // Create one weight perceptron in previous layer
 
@@ -120,12 +93,10 @@ Perceptron.prototype.createWeights = function(inputs) {
 
     for (let i = 0; i < weightCount; i++) {
 
-        const weight = perceptron.mutateWeight(0, Math.random() * network.learningRate)
-
-        // Add weight to weights
-        
-        perceptron.weights.push(weight)
+        perceptron.weights.push(1)
     }
+
+    perceptron.mutateWeights()
 }
 
 Perceptron.prototype.updateWeights = function() {
@@ -136,42 +107,29 @@ Perceptron.prototype.updateWeights = function() {
 
     perceptron.weightResults = []
 
-    let i = 0
+    for (let i = 0; i < perceptron.inputs.length; i++) {
 
-    for (const input of perceptron.inputs) {
-
-        // Find weight corresponding to input
-        
-        const weight = perceptron.weights[i]
-        
         // Assign weight to input and add value to weightResults
-        
-        perceptron.weightResults.push(input * weight)
 
-        i++
+        perceptron.weightResults.push(perceptron.inputs[i] * perceptron.weights[i])
     }
-}
-
-Perceptron.prototype.transfer = function() {
-
-    const perceptron = this
-
-    // Reset transferValue
-
-    perceptron.transferValue = 0
-
-    // Combine all weightResults into transferValue
-
-    for (let weightResult of perceptron.weightResults) perceptron.transferValue += weightResult
 }
 
 Perceptron.prototype.activate = function() {
 
     const perceptron = this
 
-    // Implement transferValue into activateValue, convert to 0 if negative value
+    // Reset activateValue
 
-    perceptron.activateValue = Math.max(perceptron.transferValue, 0)
+    perceptron.activateValue = 0
+
+    // Combine all weightResults into activateValue
+
+    for (const weightResult of perceptron.weightResults) perceptron.activateValue += weightResult
+
+    // Implement convert activateValue to 0 if negative
+
+    perceptron.activateValue = Math.max(perceptron.activateValue, 0)
 }
 
 Perceptron.prototype.run = function(inputs) {
@@ -183,8 +141,7 @@ Perceptron.prototype.run = function(inputs) {
     perceptron.inputs = inputs
 
     // Run commands to convert the inputs into an activateValue
-    
+
     perceptron.updateWeights()
-    perceptron.transfer()
     perceptron.activate()
 }

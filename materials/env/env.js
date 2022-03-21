@@ -11,8 +11,8 @@ class Env {
 
         env.tick = 0
         env.roundTick = 0
-        env.topScore = 0
-        env.currentScore = 0
+        env.topFitness = 0
+        env.currentFitness = 0
         env.gamesAmount = 10
         env.speed = 1
     }
@@ -39,11 +39,28 @@ Env.prototype.init = function() {
 
     env.cm.imageSmoothingEnabled = false
 
+    env.initGames()
+}
+
+Env.prototype.initGames = function() {
+
+    const inputs = [
+            { name: 'X pos', value: 0 },
+            { name: 'Y pos', value: 0 },
+        ],
+        outputs = [
+            { name: 'Move left' },
+            { name: 'Move right' },
+            { name: 'Move up' },
+            { name: 'Move down' },
+        ]
+
     //
 
     for (let i = 0; i < env.gamesAmount; i++) {
 
-        new Game()
+        const game = new Game()
+        game.init(inputs, outputs)
     }
 }
 
@@ -61,38 +78,15 @@ Env.prototype.run = function() {
         'tick',
         'roundTick',
         'gamesAmount',
-        'topScore',
-        'currentScore',
+        'topFitness',
+        'currentFitness',
         'speed'
     ]
-
-    if (env.tick - env.lastReset > 1000) env.reset()
 
     for (const statType of stats) {
 
         document.getElementById(statType).innerText = env[statType]
     }
-
-    //
-
-    for (const gameID in env.games) {
-
-        const game = env.games[gameID]
-
-        for (const type in game.objects) {
-
-            if (type != 'default') continue
-
-            for (const ID in game.objects[type]) {
-
-                const gameObj = game.objects[type][ID]
-
-                gameObj.move(gameObj.pos.left + Math.random() * 5 - Math.random() * 5, gameObj.pos.top + Math.random() * 5 - Math.random() * 5)
-            }
-        }
-    }
-
-    //
 
     // Store the current transformation matrix
 
@@ -111,11 +105,102 @@ Env.prototype.run = function() {
 
     //
 
-    Object.values(env.games)[0].visualize()
+    /* Object.values(env.games)[0].visualize() */
+
+    // Record units
+
+    const units = []
+
+    //
+
+    for (const gameID in env.games) {
+
+        const game = env.games[gameID]
+
+        for (const ID in game.objects.example) {
+
+            const gameObj = game.objects.example[ID]
+
+            units.push(gameObj)
+
+            gameObj.inputs = [
+                { name: 'X pos', value: gameObj.pos.left },
+                { name: 'Y pos', value: gameObj.pos.top },
+            ]
+
+            gameObj.outputs = [
+                { name: 'Move left', operation: () => gameObj.move(gameObj.pos.left - 10, gameObj.pos.top) },
+                { name: 'Move right', operation: () => gameObj.move(gameObj.pos.left + 10, gameObj.pos.top) },
+                { name: 'Move up', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top - 10) },
+                { name: 'Move down', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top + 10) },
+            ]
+
+            gameObj.network.forwardPropagate(gameObj.inputs)
+            gameObj.network.updateVisuals()
+            gameObj.network.visualsParent.style.display = 'none'
+
+            // Find last layer
+
+            const lastLayer = gameObj.network.layers[Object.keys(gameObj.network.layers).length - 1],
+                lastLayerPerceptrons = Object.values(lastLayer.perceptrons)
+                /* 
+                            for (const perceptron of lastLayerPerceptrons) {
+
+                                if (perceptron.activateValue <= 0) continue
+
+                                gameObj.outputs[perceptron.name].operation()
+                            }
+                 */
+
+            // Sort perceptrons by activateValue and get the largest one
+
+            const perceptronWithLargestValue = lastLayerPerceptrons.sort((a, b) => a.activateValue - b.activateValue).reverse()[0]
+
+            if (perceptronWithLargestValue.activateValue > 0) {
+
+                gameObj.outputs[perceptronWithLargestValue.name].operation()
+            }
+
+            gameObj.generateFitness()
+        }
+
+        game.visualize()
+    }
+
+    //
+
+    const fittestUnit = env.findFittestUnit(units)
+
+    fittestUnit.network.visualsParent.style.display = 'flex'
+
+    if (fittestUnit.fitness > env.topFitness) env.topFitness = fittestUnit.fitness
+    env.currentFitness = fittestUnit.fitness
+
+    //
+
+    if (env.tick - env.lastReset > 1000) {
+
+        env.reset(fittestUnit)
+    }
 }
 
-Env.prototype.reset = function() {
+Env.prototype.findFittestUnit = function(units) {
+
+    return fitestUnit = units.sort((a, b) => a.fitness - b.fitness)[units.length - 1]
+}
+
+Env.prototype.reset = function(fittestUnit) {
 
     env.lastReset = env.tick
     env.roundTick = 0
+
+    for (const gameID in env.games) {
+
+        const game = env.games[gameID]
+
+        game.reset()
+        game.init(fittestUnit.inputs, fittestUnit.outputs, fittestUnit.network)
+    }
+
+    fittestUnit.delete()
 }

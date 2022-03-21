@@ -61,10 +61,11 @@ style {
 .envParent {
     display: flex;
     justify-content: center;
-    align-items: center;
+    padding: 20px;
     min-height: 100vh;
     background-color: var(--tertiaryShade);
     gap: 20px;
+    position: relative;
 }
 
 .env {
@@ -72,6 +73,8 @@ style {
     background: var(--secondaryShade);
     z-index: 1;
     height: fit-content;
+    position: sticky;
+    top: 20px;
 }
 
 .displayParent {
@@ -112,7 +115,8 @@ style {
 .statsParent {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
+    justify-content: center;
 }
 
 .statsChild {
@@ -120,12 +124,22 @@ style {
     gap: 10px;
 }
 
+.statsChild :nth-child(even) {
+    text-align: left;
+}
+
+.statsChild :nth-child(odd) {
+    text-align: right;
+}
+
 .statsHeader {
     font-weight: 500;
+    width: 50%;
 }
 
 .statsAmount {
     font-weight: 200;
+    width: 50%;
 }
 
 .changeParent {
@@ -218,6 +232,7 @@ style {
     color: black;
     position: relative;
     outline: 1.9px solid rgb(255, 255, 255);
+    font-weight: 500;
 }
 
 .inputPerceptron {
@@ -230,6 +245,7 @@ style {
 
 .textVisual {
     font-size: 14px;
+    font-weight: 500;
     color: rgb(255, 255, 255);
     position: absolute;
     width: fit-content;
