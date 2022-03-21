@@ -15,25 +15,6 @@ class Runner {
     }
 }
 
-Runner.prototype.wait = function(miliseconds) {
-
-    return new Promise(resolve => setTimeout(resolve, miliseconds))
-}
-
-Runner.prototype.runTick = async function() {
-
-    const runner = this
-
-    while (1 == 1) {
-
-        if (!runners.includes(runner.ID)) return
-
-        await runner.wait(1000 - env.speed)
-
-        env.run()
-    }
-}
-
 Runner.prototype.run = function() {
 
     const runner = this
@@ -42,7 +23,13 @@ Runner.prototype.run = function() {
 
     while (i > 0) {
 
-        runner.runTick()
+        setInterval(function() {
+
+            if (!runners.includes(runner.ID)) return
+
+            env.run()
+
+        }, 1000 - env.speed)
 
         i--
     }
