@@ -1,13 +1,15 @@
 class Player {
-    constructor(name, game) {
+    constructor(name, gameID) {
 
         const player = this
 
         player.name = name
-        player.game = game
+        player.gameID = gameID
 
         player.ID = env.newID()
         player.fitness = 0
+
+        env.games[player.gameID].players[player.ID] = player
     }
 }
 

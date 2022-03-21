@@ -9,7 +9,7 @@ class Runner {
 
         runners.shift()
 
-        runner.ID = newID()
+        runner.ID = env.newID()
 
         runners.push(runner.ID)
     }

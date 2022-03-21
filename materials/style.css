@@ -49,6 +49,13 @@ style {
 }
 
 
+/* Game */
+
+.sprite {
+    display: none;
+}
+
+
 /* Content */
 
 .envParent {

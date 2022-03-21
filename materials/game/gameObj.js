@@ -1,5 +1,5 @@
-class GameObj {
-    constructor(type, gameID, ownerID, left, top, width, height, imageSource) {
+class GameObject {
+    constructor(type, gameID, ownerID, left, top, width, height) {
 
         const gameObj = this
 
@@ -12,12 +12,12 @@ class GameObj {
         gameObj.width = width
         gameObj.height = height
 
-        gameObj.imageSource = imageSource
+        gameObj.ID = newID()
 
-        gameObj.id = newID()
+        const game = env.games[gameObj.gameID]
 
         if (!game.objects[type]) game.objects[type] = {}
-        game.objects[type][gameObj.id] = gameObj
+        game.objects[type][gameObj.ID] = gameObj
     }
 }
 
@@ -25,7 +25,7 @@ GameObject.prototype.draw = function() {
 
     const gameObj = this
 
-    game.cm.drawImage(document.getElementById(gameObj.imageSource), gameObj.pos.left, gameObj.pos.top, gameObj.width, gameObj.height)
+    env.cm.drawImage(document.getElementById(gameObj.type), gameObj.pos.left, gameObj.pos.top, gameObj.width, gameObj.height)
 }
 
 GameObject.prototype.delete = function() {
@@ -34,7 +34,7 @@ GameObject.prototype.delete = function() {
 
     if (gameObj.network) gameObj.network.visualsParent.remove()
 
-    delete game.objects[gameObj.type][gameObj.id]
+    delete game.objects[gameObj.type][gameObj.ID]
 }
 
 GameObject.prototype.move = function(left, top) {
