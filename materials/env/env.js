@@ -5,16 +5,39 @@ class Env {
 
         env.games = {}
         env.IDIndex = 0
-        env.width = 600
-        env.height = 600
+        env.width = 900
+        env.height = 700
         env.lastReset = 0
 
         env.tick = 0
         env.roundTick = 0
+        env.generation = 1
         env.topFitness = 0
         env.currentFitness = 0
-        env.gamesAmount = 10
+        env.gamesAmount = 1
         env.speed = 1
+
+        env.stats = [
+            'tick',
+            'roundTick',
+            'generation',
+            'gamesAmount',
+            'topFitness',
+            'currentFitness',
+            'speed'
+        ]
+
+        env.inputs = [
+            { name: 'X pos', value: 0 },
+            { name: 'Y pos', value: 0 },
+        ]
+
+        env.outputs = [
+            { name: 'Move left' },
+            { name: 'Move right' },
+            { name: 'Move up' },
+            { name: 'Move down' },
+        ]
     }
 }
 
@@ -44,23 +67,12 @@ Env.prototype.init = function() {
 
 Env.prototype.initGames = function() {
 
-    const inputs = [
-            { name: 'X pos', value: 0 },
-            { name: 'Y pos', value: 0 },
-        ],
-        outputs = [
-            { name: 'Move left' },
-            { name: 'Move right' },
-            { name: 'Move up' },
-            { name: 'Move down' },
-        ]
-
     //
 
     for (let i = 0; i < env.gamesAmount; i++) {
 
         const game = new Game()
-        game.init(inputs, outputs)
+        game.init(env.inputs, env.outputs)
     }
 }
 
@@ -74,16 +86,7 @@ Env.prototype.run = function() {
     env.tick += 1
     env.roundTick += 1
 
-    const stats = [
-        'tick',
-        'roundTick',
-        'gamesAmount',
-        'topFitness',
-        'currentFitness',
-        'speed'
-    ]
-
-    for (const statType of stats) {
+    for (const statType of env.stats) {
 
         document.getElementById(statType).innerText = env[statType]
     }
@@ -121,8 +124,6 @@ Env.prototype.run = function() {
 
             const gameObj = game.objects.example[ID]
 
-            units.push(gameObj)
-
             gameObj.inputs = [
                 { name: 'X pos', value: gameObj.pos.left },
                 { name: 'Y pos', value: gameObj.pos.top },
@@ -136,7 +137,7 @@ Env.prototype.run = function() {
             ]
 
             gameObj.network.forwardPropagate(gameObj.inputs)
-            gameObj.network.updateVisuals()
+                /* gameObj.network.updateVisuals() */
             gameObj.network.visualsParent.style.display = 'none'
 
             // Find last layer
@@ -151,8 +152,7 @@ Env.prototype.run = function() {
                                 gameObj.outputs[perceptron.name].operation()
                             }
                  */
-
-            // Sort perceptrons by activateValue and get the largest one
+                // Sort perceptrons by activateValue and get the largest one
 
             const perceptronWithLargestValue = lastLayerPerceptrons.sort((a, b) => a.activateValue - b.activateValue).reverse()[0]
 
@@ -162,6 +162,8 @@ Env.prototype.run = function() {
             }
 
             gameObj.generateFitness()
+
+            units.push(gameObj)
         }
 
         game.visualize()
@@ -171,6 +173,7 @@ Env.prototype.run = function() {
 
     const fittestUnit = env.findFittestUnit(units)
 
+    fittestUnit.network.updateVisuals()
     fittestUnit.network.visualsParent.style.display = 'flex'
 
     if (fittestUnit.fitness > env.topFitness) env.topFitness = fittestUnit.fitness
@@ -193,13 +196,14 @@ Env.prototype.reset = function(fittestUnit) {
 
     env.lastReset = env.tick
     env.roundTick = 0
+    env.generation += 1
 
     for (const gameID in env.games) {
 
         const game = env.games[gameID]
 
         game.reset()
-        game.init(fittestUnit.inputs, fittestUnit.outputs, fittestUnit.network)
+        game.init(env.inputs, env.outputs, fittestUnit.network)
     }
 
     fittestUnit.delete()

@@ -64,7 +64,7 @@ GameObject.prototype.newNetwork = function(inputs, outputs) {
 
     // Create layers
 
-    let layerCount = 2
+    const layerCount = 3
 
     for (let i = 0; i < layerCount; i++) network.addLayer()
 
@@ -76,19 +76,19 @@ GameObject.prototype.newNetwork = function(inputs, outputs) {
 
     // Create hidden perceptrons
 
-    let hiddenPerceptronsNeed = 3
+    const hiddenPerceptronsNeed = 5
 
     // Loop through layers
 
-    for (let layerName in network.layers) {
+    for (const layerName in network.layers) {
 
         // Filter only hidden layers
 
-        let layersCount = Object.keys(network.layers).length
+        const layersCount = Object.keys(network.layers).length
 
         if (layerName > 0 && layerName < layersCount - 1) {
 
-            let layer = network.layers[layerName]
+            const layer = network.layers[layerName]
 
             for (let i = 0; i < hiddenPerceptronsNeed; i++) layer.addPerceptron()
         }

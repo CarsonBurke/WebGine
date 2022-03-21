@@ -57,6 +57,32 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
             // Run the perceptron
 
             perceptron.run(findInputs(layerName, perceptronName))
+
+            const perceptronInputs = [network.bias]
+
+            // If in first layer
+
+            if (layerName == 0) {
+
+                // Assign input value relative to perceptronName
+
+                perceptronInputs.push(Object.values(inputs)[perceptronName].value)
+
+                perceptron.run(perceptronInputs)
+                continue
+            }
+
+            const previousLayer = network.layers[layerName - 1]
+
+            for (const perceptronID in previousLayer.perceptrons) {
+
+                const previousPerceptron = previousLayer.perceptrons[perceptronID]
+
+                perceptronInputs.push(previousPerceptron.activateValue)
+            }
+
+            perceptron.run(perceptronInputs)
+            continue
         }
     }
 }
@@ -82,14 +108,10 @@ NeuralNetwork.prototype.learn = function() {
             perceptron.mutateWeights()
         }
     }
-
-    return network
 }
 NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
     const network = this
-
-    if (network.visualsParent) return
 
     // Create visuals parent
 
@@ -104,7 +126,7 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
     // Create svg
 
-    let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
     svg.classList.add("lineParent")
 
@@ -113,9 +135,9 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
     // Loop through each layer
 
-    for (let layerName in network.layers) {
+    for (const layerName in network.layers) {
 
-        let layer = network.layers[layerName]
+        const layer = network.layers[layerName]
 
         // make sure there isn't already a visual
 
@@ -123,7 +145,7 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
         // Create visuals for the layer
 
-        let layerVisual = document.createElement("div")
+        const layerVisual = document.createElement("div")
 
         layerVisual.classList.add("layerVisual")
 
@@ -132,13 +154,13 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
         // loop through perceptrons in the layer
 
-        for (let perceptron1Name in layer.perceptrons) {
+        for (const perceptron1Name in layer.perceptrons) {
 
-            let perceptron1 = layer.perceptrons[perceptron1Name]
+            const perceptron1 = layer.perceptrons[perceptron1Name]
 
             // Create visuals for the perceptron
 
-            let perceptronVisual = document.createElement("div")
+            const perceptronVisual = document.createElement("div")
 
             perceptronVisual.classList.add("perceptronVisual")
 

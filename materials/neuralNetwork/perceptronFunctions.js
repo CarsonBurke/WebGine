@@ -7,7 +7,7 @@ Perceptron.prototype.mutateWeights = function() {
 
     for (let i = 0; i < perceptron.weights.length; i++) {
 
-        perceptron.weights[i] += (Math.random() * network.learningRate - Math.random() * network.learningRate)
+        perceptron.weights[i] += Math.random() * network.learningRate /* (Math.random() * network.learningRate + Math.random() * network.learningRate * -1) */
     }
 }
 
@@ -18,7 +18,7 @@ Perceptron.prototype.updateVisual = function() {
 
     // If perceptron's activateValue is 0
 
-    if (Math.floor(perceptron.activateValue * 100) / 100 == 0) {
+    if (perceptron.activateValue == 0) {
 
         // Display 0
 
@@ -55,10 +55,8 @@ Perceptron.prototype.createWeights = function(inputCount) {
 
     for (let i = 0; i < inputCount; i++) {
 
-        perceptron.weights.push(1)
+        perceptron.weights.push(0)
     }
-
-    perceptron.mutateWeights()
 }
 
 Perceptron.prototype.updateWeights = function() {

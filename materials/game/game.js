@@ -18,11 +18,11 @@ Game.prototype.init = function(inputs, outputs, network) {
 
     // Create players
 
-    new Player('person', game.ID)
+    /* new Player('person', game.ID) */
 
     // Create x number of units
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
 
         new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 30, 30, inputs, outputs, network)
     }

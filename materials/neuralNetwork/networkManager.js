@@ -3,8 +3,8 @@ const networks = {}
 // Define default values for networks
 
 const defaults = {
-    learningRate: 1,
-    bias: 0,
+    learningRate: 0.2,
+    bias: 1,
     layerVisualWidth: 70,
 
     activeColor: 'rgba(14, 81, 226, 0.75)',

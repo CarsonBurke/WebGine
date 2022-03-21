@@ -7,14 +7,10 @@ class ExampleUnit extends GameObject {
 
         exampleUnit.fitness = 0
 
-        if (network) {
+        if (network) exampleUnit.network = network.clone(inputs, outputs)
+        else exampleUnit.newNetwork(inputs, outputs)
 
-            exampleUnit.network = network.clone(inputs, outputs)
-                /* exampleUnit.network.learn() */
-        } else exampleUnit.newNetwork(inputs, outputs)
-
-        exampleUnit.inputs = inputs
-        exampleUnit.outputs = outputs
+        exampleUnit.network.learn()
     }
 }
 
