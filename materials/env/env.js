@@ -178,7 +178,7 @@ Env.prototype.run = function() {
 
     //
 
-    if (env.tick - env.lastReset > 1000) {
+    if (env.tick - env.lastReset > 500) {
 
         env.reset(fittestUnit)
     }

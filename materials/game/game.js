@@ -24,7 +24,7 @@ Game.prototype.init = function(inputs, outputs, network) {
 
     for (let i = 0; i < 10; i++) {
 
-        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 100, 100, inputs, outputs, network)
+        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 30, 30, inputs, outputs, network)
     }
 }
 

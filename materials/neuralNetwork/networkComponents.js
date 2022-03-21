@@ -1,25 +1,3 @@
-class Line {
-    constructor(opts) {
-
-        const line = this
-
-        // Assign opts
-
-        for (const propertyName in opts) {
-
-            line[propertyName] = opts[propertyName]
-        }
-
-        // Set as connected
-
-        line.connected = true
-
-        // Create element
-
-        line.createEl()
-    }
-}
-
 class Perceptron {
     constructor(opts) {
 
@@ -35,6 +13,7 @@ class Perceptron {
         // Create empty properties for the future
 
         perceptron.weights = []
+        perceptron.lines = []
     }
 }
 
@@ -53,7 +32,6 @@ class Layer {
         // Create empty objects for future properties
 
         layer.perceptrons = {}
-        layer.lines = {}
     }
 }
 

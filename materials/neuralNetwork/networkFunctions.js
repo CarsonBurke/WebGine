@@ -16,7 +16,7 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
     const network = this
 
 
-    function findInputs(layerName, perceptron, perceptronName) {
+    function findInputs(layerName, perceptronName) {
 
         const newInputs = [network.bias]
 
@@ -33,27 +33,11 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
         const previousLayer = network.layers[layerName - 1]
 
-        for (const lineID in previousLayer.lines) {
+        for (const perceptronID in previousLayer.perceptrons) {
 
-            const line = previousLayer.lines[lineID]
+            const previousPerceptron = previousLayer.perceptrons[perceptronID]
 
-            // Iterate if line's output perceptron isn't network perceptron
-
-            if (line.perceptron2 != perceptron) continue
-
-            // If line is connected
-
-            if (line.connected) {
-
-                // Add line's perceptron activateValue to inputs
-
-                newInputs.push(line.perceptron1.activateValue)
-                continue
-            }
-
-            // Add 0 to newInputs
-
-            newInputs.push(0)
+            newInputs.push(previousPerceptron.activateValue)
         }
 
         return newInputs
@@ -61,19 +45,19 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
     // Loop through layers
 
-    for (let layerName in network.layers) {
+    for (const layerName in network.layers) {
 
-        let layer = network.layers[layerName]
+        const layer = network.layers[layerName]
 
         // loop through perceptrons in the layer
 
-        for (let perceptronName in layer.perceptrons) {
+        for (const perceptronName in layer.perceptrons) {
 
-            let perceptron = layer.perceptrons[perceptronName]
+            const perceptron = layer.perceptrons[perceptronName]
 
             // Run the perceptron
 
-            perceptron.run(findInputs(layerName, perceptron, perceptronName))
+            perceptron.run(findInputs(layerName, perceptronName))
         }
     }
 }
@@ -97,15 +81,6 @@ NeuralNetwork.prototype.learn = function() {
             // Mutate perceptron
 
             perceptron.mutateWeights()
-        }
-
-        // Loop through lines in layer
-
-        for (const lineID in layer.lines) {
-
-            const line = layer.lines[lineID]
-
-            network.mutateLine(line)
         }
     }
 
@@ -215,16 +190,48 @@ NeuralNetwork.prototype.createLineVisuals = function() {
 
                 const perceptron2 = proceedingLayer.perceptrons[perceptron2Name]
 
-                const lineID = newID()
+                // Create line el
 
-                const line = layer.lines[lineID] = new Line({
-                    networkID: network.id,
-                    perceptron1: perceptron1,
-                    perceptron2: perceptron2,
-                    id: lineID
-                })
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
 
-                network.mutateLine(line)
+                // Get rect of perceptronVisuals
+
+                const perceptron1VisualRect = perceptron1.visual.getBoundingClientRect()
+
+                // Construct line positions
+
+                const x1 = Math.floor(perceptron1VisualRect.left)
+                const y1 = Math.floor(perceptron1VisualRect.top)
+
+                // Get rect of perceptronVisuals
+
+                const perceptron2VisualRect = perceptron2.visual.getBoundingClientRect()
+
+                // Construct line positions
+
+                const x2 = Math.floor(perceptron2VisualRect.left)
+                const y2 = Math.floor(perceptron2VisualRect.top)
+
+                // Get rect of visualsParent
+
+                const visualsParentRect = network.visualsParent.getBoundingClientRect()
+
+                // Implement line positions into element
+
+                line.setAttribute('x1', x1 + perceptron1.visual.offsetWidth / 2 - visualsParentRect.left)
+                line.setAttribute('y1', y1 + perceptron1.visual.offsetHeight / 2 - visualsParentRect.top)
+                line.setAttribute('x2', x2 + perceptron2.visual.offsetWidth / 2 - visualsParentRect.left)
+                line.setAttribute('y2', y2 + perceptron2.visual.offsetHeight / 2 - visualsParentRect.top)
+
+                // Give line class
+
+                line.classList.add("line")
+
+                // Add line to line visuals element
+
+                network.svg.appendChild(line)
+
+                perceptron1.lines.push(line)
             }
         }
     }
@@ -279,62 +286,6 @@ NeuralNetwork.prototype.createTextVisuals = function(inputs, outputs) {
         i++
     }
 }
-NeuralNetwork.prototype.mutateLine = function(line) {
-
-    const network = this
-
-    // Stop if line mutation is disabled
-
-    if (!network.lineMutation) return
-
-    // Get random value influenced by learning rate
-
-    let value = Math.random() * 5 / network.learningRate
-
-    // Stop if value is more than 1
-
-    if (value > 1) return
-
-    // Decide if to subract or add
-
-    let adjustType = Math.floor(Math.random() * 2)
-
-    // Enable line if 0
-
-    if (adjustType == 0) {
-
-        // Stop if line is already connected
-
-        if (line.connected) return
-
-        // Show line element
-
-        line.el.classList.remove('lineDisconnected')
-
-        // Record that the line is connected
-
-        line.connected = true
-        return
-    }
-
-    // Disable line if 1
-
-    if (adjustType == 1) {
-
-        // Stop if line is already not connected
-
-        if (!line.connected) return
-
-        // Hide line element
-
-        line.el.classList.add('lineDisconnected')
-
-        // Record that the line is disconnected
-
-        line.connected = false
-        return
-    }
-}
 
 NeuralNetwork.prototype.updateVisuals = function() {
 
@@ -353,15 +304,16 @@ NeuralNetwork.prototype.updateVisuals = function() {
             // Update perceptron's visuals
 
             perceptron.updateVisual()
-        }
 
-        // Loop through lines in layer
+            //
 
-        for (const lineID in layer.lines) {
+            for (const line of perceptron.lines) {
 
-            const line = layer.lines[lineID]
+                if (perceptron.activateValue > 0) {
 
-            line.updateVisual()
+                    line.style.stroke = network.activeColor
+                } else line.style.stroke = network.inactiveColor
+            }
         }
     }
 }
@@ -391,7 +343,7 @@ NeuralNetwork.prototype.init = function(inputs, outputs) {
 
             const preceedingLayer = network.layers[parseInt(layerName) - 1]
 
-            const inputCount = Object.keys(preceedingLayer.lines).length / Object.keys(layer.perceptrons).length
+            const inputCount = Object.keys(preceedingLayer.perceptrons).length
 
             let fakeInputs = []
 
@@ -435,38 +387,6 @@ NeuralNetwork.prototype.clone = function(inputs, outputs) {
     // Initialize newNeuralNetwork
 
     newNeuralNetwork.init(inputs, outputs)
-
-    // Assign line properties to newNeuralNetwork
-
-    for (const layerName in network.layers) {
-
-        const layer = network.layers[layerName]
-
-        const newLayer = newNeuralNetwork.layers[layerName]
-
-        // Count iterations
-
-        let i = 0
-
-        for (const lineID in layer.lines) {
-
-            const line = layer.lines[lineID]
-
-            const newLayerLineID = Object.keys(newLayer.lines)[i]
-
-            // Assign line property to newNeuralNetwork's adjacent line
-
-            newLayer.lines[newLayerLineID].connected = line.connected
-
-            //
-
-            newLayer.lines[newLayerLineID].el.classList = line.el.classList
-
-            // Record iteration
-
-            i++
-        }
-    }
 
     // Inform new network
 
