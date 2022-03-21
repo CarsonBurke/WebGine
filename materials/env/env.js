@@ -87,7 +87,7 @@ Env.prototype.run = function() {
 
                 const gameObj = game.objects[type][ID]
 
-                gameObj.move(gameObj.pos.left + 1, gameObj.pos.top - 1)
+                gameObj.move(gameObj.pos.left + Math.random() * 5 - Math.random() * 5, gameObj.pos.top + Math.random() * 5 - Math.random() * 5)
             }
         }
     }

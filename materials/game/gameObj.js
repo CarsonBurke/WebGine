@@ -43,7 +43,7 @@ GameObject.prototype.move = function(left, top) {
 
     // Check if the new pos is out of map bounds, stopping if it is
 
-    if (left < 0 || left + gameObj.width >= env.games[gameObj.gameID].width || top < 0 || top + gameObj.height >= env.games[gameObj.gameID].height) return
+    if (left < 0 || left + gameObj.width >= env.width || top < 0 || top + gameObj.height >= env.height) return
 
     // Otherwise assign the new left and top to the gameObj's pos
 
