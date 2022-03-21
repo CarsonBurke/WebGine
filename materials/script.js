@@ -1,41 +1,61 @@
 env.init()
 
-function wait(miliseconds) {
+const runners = []
+
+class Runner {
+    constructor() {
+
+        const runner = this
+
+        runners.shift()
+
+        runner.ID = newID()
+
+        runners.push(runner.ID)
+    }
+}
+
+Runner.prototype.wait = function(miliseconds) {
 
     return new Promise(resolve => setTimeout(resolve, miliseconds))
 }
 
-let restart = false
+Runner.prototype.runTick = async function() {
 
-document.addEventListener('change', (function() { restart = true }))
-document.addEventListener('change', changeSpeed)
+    const runner = this
 
-function changeSpeed() {
+    while (1 == 1) {
 
-    env.speed = document.getElementById('newSpeed').value || env.speed
+        if (!runners.includes(runner.ID)) return
+
+        await runner.wait(env.speed - 1000)
+
+        env.run()
+    }
+}
+
+Runner.prototype.run = async function() {
+
+    const runner = this
 
     let i = 0
 
     while (i < env.speed) {
 
-        if (restart) {
-
-            restart = false
-            return
-        }
-
-        runTick()
-
-        async function runTick() {
-
-            while (1 == 1) {
-
-                await wait(env.speed - 1000)
-
-                env.run()
-            }
-        }
+        runner.runTick()
 
         i++
     }
+}
+
+document.getElementById('changeSpeed').addEventListener('click', changeSpeed)
+
+changeSpeed()
+
+function changeSpeed() {
+
+    env.speed = parseInt(document.getElementById('newSpeed').value) || env.speed
+
+    const runner = new Runner()
+    runner.run()
 }
