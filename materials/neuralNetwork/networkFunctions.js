@@ -15,33 +15,6 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
     const network = this
 
-    function findInputs(layerName, perceptronName) {
-
-        const newInputs = [network.bias]
-
-        // If in first layer
-
-        if (layerName == 0) {
-
-            // Assign input value relative to perceptronName
-
-            newInputs.push(Object.values(inputs)[perceptronName].value)
-
-            return newInputs
-        }
-
-        const previousLayer = network.layers[layerName - 1]
-
-        for (const perceptronID in previousLayer.perceptrons) {
-
-            const previousPerceptron = previousLayer.perceptrons[perceptronID]
-
-            newInputs.push(previousPerceptron.activateValue)
-        }
-
-        return newInputs
-    }
-
     // Loop through layers
 
     for (const layerName in network.layers) {
@@ -54,11 +27,7 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
             const perceptron = layer.perceptrons[perceptronName]
 
-            // Run the perceptron
-
-            perceptron.run(findInputs(layerName, perceptronName))
-
-            const perceptronInputs = [network.bias]
+            const perceptronInputs = []
 
             // If in first layer
 
@@ -78,7 +47,7 @@ NeuralNetwork.prototype.forwardPropagate = function(inputs) {
 
                 const previousPerceptron = previousLayer.perceptrons[perceptronID]
 
-                perceptronInputs.push(previousPerceptron.activateValue)
+                perceptronInputs.push(previousPerceptron.activation)
             }
 
             perceptron.run(perceptronInputs)
@@ -330,7 +299,7 @@ NeuralNetwork.prototype.updateVisuals = function() {
 
             for (const line of perceptron.lines) {
 
-                if (perceptron.activateValue > 0) {
+                if (perceptron.activation > 0) {
 
                     line.style.stroke = network.activeColor
                 } else line.style.stroke = network.inactiveColor
@@ -358,7 +327,7 @@ NeuralNetwork.prototype.init = function(inputs, outputs) {
 
             if (layerName == 0) {
 
-                perceptron.createWeights(2)
+                perceptron.createWeights(1)
                 continue
             }
 
@@ -366,7 +335,7 @@ NeuralNetwork.prototype.init = function(inputs, outputs) {
 
                 inputCount = Object.keys(preceedingLayer.perceptrons).length
 
-            perceptron.createWeights(inputCount + 1)
+            perceptron.createWeights(inputCount)
         }
     }
 }

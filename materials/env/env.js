@@ -147,16 +147,16 @@ Env.prototype.run = function() {
                 /* 
                             for (const perceptron of lastLayerPerceptrons) {
 
-                                if (perceptron.activateValue <= 0) continue
+                                if (perceptron.activation <= 0) continue
 
                                 gameObj.outputs[perceptron.name].operation()
                             }
                  */
-                // Sort perceptrons by activateValue and get the largest one
+                // Sort perceptrons by activation and get the largest one
 
-            const perceptronWithLargestValue = lastLayerPerceptrons.sort((a, b) => a.activateValue - b.activateValue).reverse()[0]
+            const perceptronWithLargestValue = lastLayerPerceptrons.sort((a, b) => a.activation - b.activation).reverse()[0]
 
-            if (perceptronWithLargestValue.activateValue > 0) {
+            if (perceptronWithLargestValue.activation > 0) {
 
                 gameObj.outputs[perceptronWithLargestValue.name].operation()
             }

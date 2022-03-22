@@ -7,7 +7,7 @@ Perceptron.prototype.mutateWeights = function() {
 
     for (let i = 0; i < perceptron.weights.length; i++) {
 
-        perceptron.weights[i] += Math.random() * network.learningRate /* (Math.random() * network.learningRate + Math.random() * network.learningRate * -1) */
+        perceptron.weights[i] += Math.random() * network.learningRate + Math.random() * network.learningRate * -1
     }
 }
 
@@ -16,9 +16,9 @@ Perceptron.prototype.updateVisual = function() {
     const perceptron = this
     const network = networks[perceptron.networkID]
 
-    // If perceptron's activateValue is 0
+    // If perceptron's activation is 0
 
-    if (perceptron.activateValue == 0) {
+    if (perceptron.activation == 0) {
 
         // Display 0
 
@@ -37,9 +37,9 @@ Perceptron.prototype.updateVisual = function() {
 
     perceptron.visual.style.outlineColor = network.activeColor
 
-    // Show perceptrons activateValue
+    // Show perceptrons activation
 
-    perceptron.visual.innerText = (perceptron.activateValue).toFixed(2)
+    perceptron.visual.innerText = (perceptron.activation).toFixed(2)
     return
 }
 
@@ -59,49 +59,25 @@ Perceptron.prototype.createWeights = function(inputCount) {
     }
 }
 
-Perceptron.prototype.updateWeights = function() {
-
-    const perceptron = this
-
-    // Reset weight results
-
-    perceptron.weightResults = []
-
-    for (let i = 0; i < perceptron.inputs.length; i++) {
-
-        // Assign weight to input and add value to weightResults
-
-        perceptron.weightResults.push(perceptron.inputs[i] * perceptron.weights[i])
-    }
-}
-
-Perceptron.prototype.activate = function() {
-
-    const perceptron = this
-
-    // Reset activateValue
-
-    perceptron.activateValue = 0
-
-    // Combine all weightResults into activateValue
-
-    for (const weightResult of perceptron.weightResults) perceptron.activateValue += weightResult
-
-    // Implement convert activateValue to 0 if negative
-
-    perceptron.activateValue = Math.max(perceptron.activateValue, 0)
-}
-
 Perceptron.prototype.run = function(inputs) {
 
     const perceptron = this
+    const network = networks[perceptron.networkID]
 
-    // Assign inputs
+    // Reset activation to the bias
 
-    perceptron.inputs = inputs
+    perceptron.activation = network.bias
 
-    // Run commands to convert the inputs into an activateValue
+    // Have loop through and increment i based on the number of inputs
 
-    perceptron.updateWeights()
-    perceptron.activate()
+    for (let i = 0; i < inputs.length; i++) {
+
+        // Multiply the input by the weight, adding the result to the the perceptron's activation
+
+        perceptron.activation += inputs[i] * perceptron.weights[i]
+    }
+
+    // Implement convert activation to 0 if negative
+
+    perceptron.activation = Math.max(perceptron.activation, 0)
 }

@@ -64,8 +64,8 @@ style {
 .envParent {
     display: flex;
     justify-content: center;
-    padding: 20px;
-    min-height: 100vh;
+    padding: 20px 0;
+    min-height: calc(100vh - 40px);
     background-color: var(--tertiaryShade);
     gap: 20px;
     position: relative;
