@@ -1,23 +1,39 @@
-const networks = {}
+class NetworkManager {
+    constructor() {
 
-// Define default values for networks
+        const networkManager = this
 
-const defaults = {
-    learningRate: 0.2,
-    bias: 0,
-    layerVisualWidth: 70,
+        networkManager.networks = {}
+        networkManager.IDIndex = 0
+        networkManager.activationColor = 'rgb(0, 137, 236)'
+        networkManager.negativeColor = 'rgb(241, 0, 19)'
 
-    activeColor: 'rgba(14, 81, 226, 0.75)',
-    inactiveColor: 'rgba(0, 0, 0, 0.75)',
+        //
+
+        networkManager.learningRate = 1
+        networkManager.bias = 0
+
+        // Network structure settings
+
+        networkManager.hiddenLayersCount = 5
+        networkManager.hiddenPerceptronCount = 5
+    }
 }
 
-//
+const networkManager = new NetworkManager()
 
-let idIndex = 0
 
-function newID() {
+NetworkManager.prototype.newID = function() {
 
-    // Increment idIndex and return the result
-
-    return idIndex += 1
+    return networkManager.IDIndex++
 }
+
+NetworkManager.prototype.initVisuals = function() {
+
+    networkManager.visualsParent = document.getElementsByClassName('networkManagerParent')[0]
+
+    document.getElementById('colorGuideActivation').style.background = networkManager.activationColor
+    document.getElementById('colorGuideNegative').style.background = networkManager.negativeColor
+}
+
+networkManager.initVisuals()

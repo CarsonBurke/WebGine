@@ -12,7 +12,7 @@ class Game {
     }
 }
 
-Game.prototype.init = function(inputs, outputs, network) {
+Game.prototype.init = function(fittestUnit, weightLayers, activationLayers) {
 
     const game = this
 
@@ -24,7 +24,7 @@ Game.prototype.init = function(inputs, outputs, network) {
 
     for (let i = 0; i < 100; i++) {
 
-        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 30, 30, inputs, outputs, network)
+        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 30, 30, fittestUnit, weightLayers, activationLayers)
     }
 }
 

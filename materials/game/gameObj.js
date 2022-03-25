@@ -12,7 +12,7 @@ class GameObject {
         gameObj.width = width
         gameObj.height = height
 
-        gameObj.ID = newID()
+        gameObj.ID = env.newID()
 
         const game = env.games[gameObj.gameID]
 
@@ -51,56 +51,4 @@ GameObject.prototype.move = function(left, top) {
     gameObj.pos.right = left + gameObj.width
     gameObj.pos.top = top
     gameObj.pos.bottom = top + gameObj.height
-}
-
-
-GameObject.prototype.newNetwork = function(inputs, outputs) {
-
-    const gameObj = this
-
-    // Create neural network
-
-    const network = new NeuralNetwork()
-
-    // Create layers
-
-    const layerCount = 4
-
-    for (let i = 0; i < layerCount; i++) network.addLayer()
-
-    // Create perceptrons
-
-    // Create input perceptrons
-
-    for (let i = 0; i < inputs.length; i++) network.layers[0].addPerceptron()
-
-    // Create hidden perceptrons
-
-    const hiddenPerceptronsNeed = 3
-
-    // Loop through layers
-
-    for (const layerName in network.layers) {
-
-        // Filter only hidden layers
-
-        const layersCount = Object.keys(network.layers).length
-
-        if (layerName > 0 && layerName < layersCount - 1) {
-
-            const layer = network.layers[layerName]
-
-            for (let i = 0; i < hiddenPerceptronsNeed; i++) layer.addPerceptron()
-        }
-    }
-
-    // Create output perceptrons
-
-    for (let i = 0; i < outputs.length; i++) network.layers[layerCount - 1].addPerceptron()
-
-    //
-
-    network.init(inputs, outputs)
-
-    gameObj.network = network
 }

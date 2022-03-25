@@ -14,7 +14,7 @@ body {
     scroll-behavior: smooth;
     overflow-x: hidden;
     font-family: "Raleway";
-    background: var(--secondaryShade);
+    background: var(--tertiaryShade);
     color: white;
     --primary: rgb(211, 13, 13);
     --primaryShade: white;
@@ -51,6 +51,10 @@ style {
     display: none;
 }
 
+div {
+    display: block;
+}
+
 
 /* Game */
 
@@ -66,14 +70,14 @@ style {
     justify-content: center;
     padding: 20px 0;
     min-height: calc(100vh - 40px);
-    background-color: var(--tertiaryShade);
+    background-color: var(--secondaryShade);
     gap: 20px;
     position: relative;
 }
 
 .env {
     box-shadow: rgba(0, 0, 0, 0.3) 0 0 80px 0;
-    background: var(--secondaryShade);
+    background: var(--tertiaryShade);
     z-index: 1;
     height: fit-content;
     position: sticky;
@@ -93,7 +97,7 @@ style {
     justify-content: center;
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.3) 0 0 80px 0;
-    background: var(--secondaryShade);
+    background: var(--tertiaryShade);
 }
 
 .envIcon {
@@ -158,7 +162,7 @@ style {
     padding-left: 15px;
     font-size: 16px;
     width: 130px;
-    border: var(--tertiaryShade) 2px solid;
+    border: var(--secondaryShade) 2px solid;
     user-select: none;
     transition: all 0.3s;
 }
@@ -178,7 +182,7 @@ style {
 .changeButton {
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
-    background-color: var(--tertiaryShade);
+    background-color: var(--secondaryShade);
     padding: 8px 20px;
     cursor: pointer;
     user-select: none;
@@ -194,73 +198,109 @@ style {
 }
 
 
-/* Neural Network */
+/* Network Visuals */
 
-.networkVisualsParent {
-    padding: 0 100px;
-    gap: 20px;
-    display: flex;
-}
-
-.visualsParent {
-    position: relative;
-    width: fit-content;
-    display: flex;
-    pointer-events: none;
-    user-select: none;
-}
-
-.layerVisual {
-    width: 100%;
+.networkManagerParent {
+    padding: 20px;
+    background: var(--tertiaryShade);
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 40px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
-.perceptronVisual {
-    background: rgb(28, 238, 0);
-    box-shadow: rgba(0, 0, 0, 0.3) 0 0 20px 0;
-    border-radius: 100%;
+.networkGuide {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: var(--secondaryShade);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 15px;
+}
+
+.colorGuideParent {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.colorGuideColor {
+    width: 15px;
+    height: 15px;
+}
+
+.networkParent {
+    display: flex;
+    gap: 20px;
+    position: relative;
+    justify-items: center;
+    align-items: center;
+    width: fit-content;
+    user-select: none;
+}
+
+.perceptronLayer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.perceptronLayer div {
+    z-index: 1;
     width: 50px;
     height: 50px;
-    margin: 5px 0;
+    border-radius: 100%;
+    background: black;
+    color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
-    color: black;
-    position: relative;
-    outline: 1.9px solid rgba(0, 0, 0, 0.75);
     font-weight: 500;
+    border: 2px solid transparent;
 }
 
-.inputPerceptron {
-    background: rgb(255, 187, 0);
+.inputLayer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.outputPerceptron {
-    background: rgb(250, 15, 15);
-}
-
-.textVisual {
-    font-size: 14px;
+.inputLayer p {
+    max-width: 200px;
     font-weight: 500;
-    color: rgb(255, 255, 255);
-    position: absolute;
-    width: fit-content;
+    height: 50px;
+    line-height: 50px;
 }
 
-.lineParent {
+.descriptionLayer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.inputDescriptionLayer p {
+    text-align: right;
+}
+
+.descriptionLayer p {
+    max-width: 200px;
+    font-weight: 500;
+    height: 50px;
+    line-height: 50px;
+}
+
+.linesParent {
     position: absolute;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
-.line {
-    stroke-width: 1.5px;
-}
-
-.lineDisconnected {
-    opacity: 0;
+.linesParent line {
+    stroke-width: 2px;
 }
