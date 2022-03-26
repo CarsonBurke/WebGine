@@ -32,7 +32,12 @@ GameObject.prototype.delete = function() {
 
     const gameObj = this
 
-    if (gameObj.network) gameObj.network.visualsParent.remove()
+    if (gameObj.network) {
+
+        if (gameObj.network.visualsParent) gameObj.network.visualsParent.remove()
+
+        delete networkManager.networks[gameObj.network.ID]
+    }
 
     delete env.games[gameObj.gameID].objects[gameObj.type][gameObj.ID]
 }

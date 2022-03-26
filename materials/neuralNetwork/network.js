@@ -279,7 +279,7 @@ NeuralNetwork.prototype.updateVisuals = function(inputs) {
     const network = this
 
     // Inputs
-    console.log(inputs, network)
+
     for (let activationsIndex = 0; activationsIndex < network.activationLayers[0].length; activationsIndex++) {
 
         const inputVisual = network.inputLayerVisuals[activationsIndex],

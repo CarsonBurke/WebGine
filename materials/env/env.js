@@ -72,7 +72,7 @@ Env.prototype.initGames = function() {
     for (let i = 0; i < env.gamesAmount; i++) {
 
         const game = new Game()
-        game.init(undefined, env.inputs, env.outputs)
+        game.init(env.inputs, env.outputs)
     }
 }
 
@@ -137,12 +137,15 @@ Env.prototype.run = function() {
             ]
 
             gameObj.network.forwardPropagate(gameObj.inputs)
-                /* gameObj.network.updateVisuals() */
-            if (gameObj.network.visualsParent) gameObj.network.visualsParent.style.display = 'none'
+
+            if (!gameObj.network.visualsParent) gameObj.network.createVisuals(gameObj.inputs, gameObj.outputs)
+            gameObj.network.updateVisuals(gameObj.inputs)
+
+            /* if (gameObj.network.visualsParent) gameObj.network.visualsParent.style.display = 'none' */
 
             // Find last layer
 
-            const lastLayerActivations = gameObj.network.activationLayers[gameObj.network.activationLayers.length - 1]
+            const lastLayerActivations = gameObj.network.activationLayers[gameObj.network.activationLayers.length - 1],
                 /* 
                             for (const perceptron of lastLayerPerceptrons) {
 
@@ -153,7 +156,7 @@ Env.prototype.run = function() {
                  */
                 // Sort perceptrons by activation and get the largest one
 
-            largestActivation = lastLayerActivations.sort((a, b) => a - b).reverse()[0],
+                largestActivation = [...lastLayerActivations].sort((a, b) => a - b).reverse()[0],
                 largestActivationIndex = lastLayerActivations.indexOf(largestActivation)
 
             if (largestActivation > 0) {
@@ -175,7 +178,7 @@ Env.prototype.run = function() {
 
     if (!fittestUnit.network.visualsParent) fittestUnit.network.createVisuals(fittestUnit.inputs, fittestUnit.outputs)
     fittestUnit.network.updateVisuals(fittestUnit.inputs)
-    fittestUnit.network.visualsParent.style.display = 'flex'
+        /* fittestUnit.network.visualsParent.style.display = 'flex' */
 
     if (fittestUnit.fitness > env.topFitness) env.topFitness = fittestUnit.fitness
     env.currentFitness = fittestUnit.fitness
@@ -199,13 +202,16 @@ Env.prototype.reset = function(fittestUnit) {
     env.roundTick = 0
     env.generation += 1
 
+    const weightLayers = fittestUnit.weightLayers,
+        activationLayers = fittestUnit.activationLayers
+
+    fittestUnit.delete()
+
     for (const gameID in env.games) {
 
         const game = env.games[gameID]
 
         game.reset()
-        game.init(fittestUnit.network, env.inputs, env.outputs)
+        game.init(env.inputs, env.outputs, weightLayers, activationLayers)
     }
-
-    fittestUnit.delete()
 }

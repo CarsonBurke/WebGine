@@ -1,5 +1,5 @@
 class ExampleUnit extends GameObject {
-    constructor(type, gameID, ownerID, left, top, width, height, network, inputs, outputs) {
+    constructor(type, gameID, ownerID, left, top, width, height, inputs, outputs, weightLayers, activationLayers) {
 
         super(type, gameID, ownerID, left, top, width, height)
 
@@ -7,8 +7,11 @@ class ExampleUnit extends GameObject {
 
         exampleUnit.fitness = 0
 
-        if (network) exampleUnit.network = network.clone(network.weightLayers, network.activationLayers)
-        else {
+        if (weightLayers && activationLayers) {
+
+            exampleUnit.network = new NeuralNetwork(weightLayers, activationLayers)
+
+        } else {
 
             exampleUnit.network = new NeuralNetwork()
             exampleUnit.network.construct(inputs.length, outputs.length)
