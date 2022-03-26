@@ -127,17 +127,17 @@ Env.prototype.run = function() {
             const gameObj = game.objects.example[ID]
 
             gameObj.inputs = [
-                { name: 'X unit pos', value: gameObj.pos.left },
-                { name: 'Y unit pos', value: gameObj.pos.top },
-                { name: 'X target pos', value: env.width - gameObj.width },
-                { name: 'Y target pos', value: env.height - gameObj.height },
+                { name: 'X unit pos', value: gameObj.pos.left - gameObj.width / 2 },
+                { name: 'Y unit pos', value: gameObj.pos.top - gameObj.height / 2 },
+                { name: 'X target pos', value: env.width - gameObj.width / 2 },
+                { name: 'Y target pos', value: env.height - gameObj.height / 2 },
             ]
 
             gameObj.outputs = [
-                { name: 'Move left', operation: () => gameObj.move(gameObj.pos.left - 10, gameObj.pos.top) },
-                { name: 'Move right', operation: () => gameObj.move(gameObj.pos.left + 10, gameObj.pos.top) },
-                { name: 'Move up', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top - 10) },
-                { name: 'Move down', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top + 10) },
+                { name: 'Move left', operation: () => gameObj.move(gameObj.pos.left - 1, gameObj.pos.top) },
+                { name: 'Move right', operation: () => gameObj.move(gameObj.pos.left + 1, gameObj.pos.top) },
+                { name: 'Move up', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top - 1) },
+                { name: 'Move down', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top + 1) },
             ]
 
             gameObj.network.forwardPropagate(gameObj.inputs)
@@ -189,7 +189,7 @@ Env.prototype.run = function() {
 
     //
 
-    if (env.tick - env.lastReset > 500) {
+    if (env.tick - env.lastReset > env.width + env.height) {
 
         env.reset(fittestUnit)
     }
