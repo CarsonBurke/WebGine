@@ -138,10 +138,10 @@ Env.prototype.run = function() {
 
             gameObj.network.forwardPropagate(gameObj.inputs)
 
-            if (!gameObj.network.visualsParent) gameObj.network.createVisuals(gameObj.inputs, gameObj.outputs)
-            gameObj.network.updateVisuals(gameObj.inputs)
+            /* if (!gameObj.network.visualsParent) gameObj.network.createVisuals(gameObj.inputs, gameObj.outputs)
+            gameObj.network.updateVisuals(gameObj.inputs) */
 
-            /* if (gameObj.network.visualsParent) gameObj.network.visualsParent.style.display = 'none' */
+            if (gameObj.network.visualsParent) gameObj.network.visualsParent.classList.add('networkParentHide')
 
             // Find last layer
 
@@ -178,7 +178,7 @@ Env.prototype.run = function() {
 
     if (!fittestUnit.network.visualsParent) fittestUnit.network.createVisuals(fittestUnit.inputs, fittestUnit.outputs)
     fittestUnit.network.updateVisuals(fittestUnit.inputs)
-        /* fittestUnit.network.visualsParent.style.display = 'flex' */
+    fittestUnit.network.visualsParent.classList.remove('networkParentHide')
 
     if (fittestUnit.fitness > env.topFitness) env.topFitness = fittestUnit.fitness
     env.currentFitness = fittestUnit.fitness

@@ -242,6 +242,10 @@ div {
     user-select: none;
 }
 
+.networkParentHide {
+    display: none;
+}
+
 .perceptronLayer {
     display: flex;
     flex-direction: column;
