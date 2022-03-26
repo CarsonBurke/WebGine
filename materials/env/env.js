@@ -156,7 +156,7 @@ Env.prototype.run = function() {
                  */
                 // Sort perceptrons by activation and get the largest one
 
-                largestActivation = [...lastLayerActivations].sort((a, b) => a - b).reverse()[0],
+                largestActivation = [...lastLayerActivations].sort((a, b) => a - b)[lastLayerActivations.length - 1],
                 largestActivationIndex = lastLayerActivations.indexOf(largestActivation)
 
             if (largestActivation > 0) {
