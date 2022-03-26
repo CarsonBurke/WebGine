@@ -182,7 +182,7 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
         inputVisual.style.color = activation <= 0 ? networkManager.negativeColor : networkManager.activationColor
 
-        inputVisual.innerText = Math.floor(activation * 100) / 100 == 0 ? 0 : activation.toFixed(2)
+        inputVisual.innerText = activation.toFixed(2)
     }
 
     // Perceptrons and layers
@@ -211,7 +211,7 @@ NeuralNetwork.prototype.createVisuals = function(inputs, outputs) {
 
             perceptronVisual.style.borderColor = activation <= 0 ? networkManager.negativeColor : networkManager.activationColor
 
-            perceptronVisual.innerText = Math.floor(activation * 100) / 100 == 0 ? 0 : activation.toFixed(2)
+            perceptronVisual.innerText = activation.toFixed(2)
         }
     }
 
@@ -287,7 +287,7 @@ NeuralNetwork.prototype.updateVisuals = function(inputs) {
 
         inputVisual.style.color = activation <= 0 ? networkManager.negativeColor : networkManager.activationColor
 
-        inputVisual.innerText = Math.floor(activation * 100) / 100 == 0 ? 0 : activation.toFixed(2)
+        inputVisual.innerText = activation.toFixed(2)
     }
 
     // Perceptrons and layers
@@ -301,7 +301,7 @@ NeuralNetwork.prototype.updateVisuals = function(inputs) {
 
             perceptronVisual.style.borderColor = activation <= 0 ? networkManager.negativeColor : networkManager.activationColor
 
-            perceptronVisual.innerText = Math.floor(activation * 100) / 100 == 0 ? 0 : activation.toFixed(2)
+            perceptronVisual.innerText = activation.toFixed(2)
         }
     }
 
