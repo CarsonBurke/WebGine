@@ -30,8 +30,6 @@ class Env {
         env.inputs = [
             { name: 'X unit pos', value: 0 },
             { name: 'Y unit pos', value: 0 },
-            { name: 'X target pos', value: 0 },
-            { name: 'Y target pos', value: 0 },
         ]
 
         env.outputs = [
@@ -129,8 +127,6 @@ Env.prototype.run = function() {
             gameObj.inputs = [
                 { name: 'X unit pos', value: gameObj.pos.left - gameObj.width / 2 },
                 { name: 'Y unit pos', value: gameObj.pos.top - gameObj.height / 2 },
-                { name: 'X target pos', value: env.width - gameObj.width / 2 },
-                { name: 'Y target pos', value: env.height - gameObj.height / 2 },
             ]
 
             gameObj.outputs = [
