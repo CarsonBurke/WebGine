@@ -130,10 +130,10 @@ Env.prototype.run = function() {
             ]
 
             gameObj.outputs = [
-                { name: 'Move left', operation: () => gameObj.move(gameObj.pos.left - 1, gameObj.pos.top) },
-                { name: 'Move right', operation: () => gameObj.move(gameObj.pos.left + 1, gameObj.pos.top) },
-                { name: 'Move up', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top - 1) },
-                { name: 'Move down', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top + 1) },
+                { name: 'Move left', operation: () => gameObj.move(gameObj.pos.left - 3, gameObj.pos.top) },
+                { name: 'Move right', operation: () => gameObj.move(gameObj.pos.left + 3, gameObj.pos.top) },
+                { name: 'Move up', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top - 3) },
+                { name: 'Move down', operation: () => gameObj.move(gameObj.pos.left, gameObj.pos.top + 3) },
             ]
 
             gameObj.network.forwardPropagate(gameObj.inputs)

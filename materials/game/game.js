@@ -24,7 +24,7 @@ Game.prototype.init = function(inputs, outputs, weightLayers, activationLayers) 
 
     for (let i = 0; i < 100; i++) {
 
-        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, 30, 30, inputs, outputs, weightLayers, activationLayers)
+        new ExampleUnit('example', game.ID, Object.keys(game.players)[0], 10, 10, inputs, outputs, weightLayers, activationLayers)
     }
 }
 

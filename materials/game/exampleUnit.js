@@ -1,7 +1,7 @@
 class ExampleUnit extends GameObject {
-    constructor(type, gameID, ownerID, left, top, width, height, inputs, outputs, weightLayers, activationLayers) {
+    constructor(type, gameID, ownerID, left, top, inputs, outputs, weightLayers, activationLayers) {
 
-        super(type, gameID, ownerID, left, top, width, height)
+        super(type, gameID, ownerID, left, top)
 
         const exampleUnit = this
 

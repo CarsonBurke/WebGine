@@ -1,11 +1,16 @@
 class GameObject {
-    constructor(type, gameID, ownerID, left, top, width, height) {
+    constructor(type, gameID, ownerID, left, top) {
 
         const gameObj = this
+
+
 
         gameObj.type = type
         gameObj.gameID = gameID
         gameObj.ownerID = ownerID
+
+        let width = 50
+        let height = 50
 
         gameObj.pos = new Pos(left, top, width, height)
 
