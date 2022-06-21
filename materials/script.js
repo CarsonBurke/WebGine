@@ -19,6 +19,19 @@ Runner.prototype.run = function() {
 
     const runner = this
 
+    if (env.speed <= 1000) {
+
+        setInterval(function() {
+
+            if (!runners.includes(runner.ID)) return
+
+            env.run()
+
+        }, 1000 - env.speed)
+
+        return
+    }
+
     let i = env.speed
 
     while (i > 0) {
